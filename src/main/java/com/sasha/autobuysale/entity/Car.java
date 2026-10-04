@@ -28,13 +28,6 @@ public class Car {
     private String generation;
     private String bodyType;
 
-    //engine and transmission
-    private String engineType;
-    private Double engineVolume;
-    private Integer power;
-    private String transmission;
-    private String driveType;
-
     //appearance and condition
     private String color;
     private String condition;
