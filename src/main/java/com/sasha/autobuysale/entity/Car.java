@@ -28,12 +28,6 @@ public class Car {
     private String generation;
     private String bodyType;
 
-    //appearance and condition
-    private String color;
-    private String condition;
-    private Integer ownerCount;
-    private String steeringWheel;
-
     //legal information
     private String vin;
     private String isClearedCustoms;
