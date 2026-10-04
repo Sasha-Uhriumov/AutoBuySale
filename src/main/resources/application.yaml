@@ -1,3 +1,16 @@
 spring:
   application:
     name: AutoBuySale
+
+  datasource:
+    url: ${db_url}
+    username: ${postgres_user}
+    password: ${postgres_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: 8080
