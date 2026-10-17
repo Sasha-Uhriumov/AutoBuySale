@@ -3,6 +3,7 @@ package com.sasha.autobuysale.service;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.entity.Car;
+import com.sasha.autobuysale.exception.CarExists;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
 import org.junit.jupiter.api.Assertions;
@@ -45,6 +46,7 @@ class CarServiceTest {
         Car car = CarMapper.toEntity(createCarDTO);
         car.setId(id);
 
+        when(carRepository.existsByVin("rer3e39f9r4kr455efdef")).thenReturn(false);
         when(carRepository.save(any(Car.class))).thenReturn(car);
 
         ResponseCarDTO responseCarDTO = carService.createCar(createCarDTO);
@@ -60,5 +62,21 @@ class CarServiceTest {
         Assertions.assertEquals("Coupe", responseCarDTO.getBodyType());
         Assertions.assertEquals("rer3e39f9r4kr455efdef", responseCarDTO.getVin());
         Assertions.assertEquals("YES", responseCarDTO.getClearedCustoms());
+    }
+    @Test
+    void createCar_shouldThrowCarExists_whenVinAlreadyExists() {
+
+        CreateCarDTO createCarDTO = new CreateCarDTO();
+        createCarDTO.setVin("vin1234");
+
+        when(carRepository.existsByVin("vin1234")).thenReturn(true);
+
+        Assertions.assertThrows(
+                CarExists.class,
+                () -> carService.createCar(createCarDTO)
+        );
+
+        verify(carRepository).existsByVin("vin1234");
+        verify(carRepository, never()).save(any(Car.class));
     }
 }
