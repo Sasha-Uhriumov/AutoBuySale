@@ -20,7 +20,7 @@ public class CarService {
 
     @Transactional
     public ResponseCarDTO createCar(CreateCarDTO createCarDTO) {
-        log.info("Attempt to create a car");
+        log.info("Attempt to create a car with VIN: {}", createCarDTO.getVin());
 
         if (carRepository.existsByVin(createCarDTO.getVin())) {
            throw new CarExists("Car already exists with VIN " + createCarDTO.getVin());
