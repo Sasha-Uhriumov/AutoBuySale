@@ -3,6 +3,7 @@ package com.sasha.autobuysale.service;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.entity.Car;
+import com.sasha.autobuysale.exception.CarExists;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,17 @@ public class CarService {
 
     @Transactional
     public ResponseCarDTO createCar(CreateCarDTO createCarDTO) {
+        log.info("Attempt to create a car");
+
+        if (carRepository.existsByVin(createCarDTO.getVin())) {
+           throw new CarExists("Car already exists with VIN " + createCarDTO.getVin());
+        }
 
         Car car = CarMapper.toEntity(createCarDTO);
 
-       return CarMapper.fromEntity(carRepository.save(car));
+        Car carSaved = carRepository.save(car);
+        log.info("Car successfully created with VIN: {}", carSaved.getVin());
+
+       return CarMapper.fromEntity(carSaved);
     }
 }
