@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Year;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -78,5 +79,37 @@ class CarServiceTest {
 
         verify(carRepository).existsByVin("vin1234");
         verify(carRepository, never()).save(any(Car.class));
+    }
+
+    @Test
+    void getAllCars_shouldReturnListOfCars() {
+
+        Car car1 = new Car();
+        car1.setBrand("BMW");
+        car1.setModel("M4");
+        car1.setYear(Year.of(2014));
+        car1.setMileage(20000);
+        car1.setGeneration("F82");
+        car1.setBodyType("Coupe");
+        car1.setVin("test1234");
+        car1.setClearedCustoms("YES");
+
+        Car car2 = new Car();
+        car2.setBrand("BMW");
+        car2.setModel("M4");
+        car2.setYear(Year.of(2014));
+        car2.setMileage(20000);
+        car2.setGeneration("F82");
+        car2.setBodyType("Coupe");
+        car2.setVin("test12345");
+        car2.setClearedCustoms("YES");
+
+        when(carRepository.findAll()).thenReturn(List.of(car1, car2));
+
+        List<ResponseCarDTO> result = carService.getAllCars();
+
+        Assertions.assertEquals(2, result.size());
+
+        verify(carRepository).findAll();
     }
 }
