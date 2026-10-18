@@ -38,6 +38,7 @@ public class CarService {
 
     @Transactional(readOnly = true)
     public List<ResponseCarDTO> getAllCars() {
+        log.info("Try to get all the cars");
 
         return carRepository.findAll()
                 .stream()
