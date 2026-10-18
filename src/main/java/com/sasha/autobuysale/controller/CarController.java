@@ -5,10 +5,9 @@ import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.service.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
@@ -23,5 +22,13 @@ public class CarController {
         ResponseCarDTO responseCarDTO = carService.createCar(createCarDTO);
 
         return ResponseEntity.ok(responseCarDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResponseCarDTO>> getCars() {
+
+        List<ResponseCarDTO> allCars = carService.getAllCars();
+
+        return ResponseEntity.ok(allCars);
     }
 }
