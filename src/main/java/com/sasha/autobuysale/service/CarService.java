@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -32,5 +34,14 @@ public class CarService {
         log.info("Car successfully created with VIN: {}", carSaved.getVin());
 
        return CarMapper.fromEntity(carSaved);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ResponseCarDTO> getAllCars() {
+
+        return carRepository.findAll()
+                .stream()
+                .map(CarMapper::fromEntity)
+                .toList();
     }
 }
