@@ -90,30 +90,27 @@ class CarServiceTest {
         CarSearchDTO carSearchDTO = new CarSearchDTO();
 
         Car car1 = new Car();
-        car1.setBrand("BMW");
-        car1.setModel("M4");
-        car1.setYear(Year.of(2014));
-        car1.setMileage(20000);
-        car1.setGeneration("F82");
-        car1.setBodyType("Coupe");
-        car1.setVin("test1234");
-        car1.setClearedCustoms("YES");
-
         Car car2 = new Car();
-        car2.setBrand("BMW");
-        car2.setModel("M4");
-        car2.setYear(Year.of(2014));
-        car2.setMileage(20000);
-        car2.setGeneration("F82");
-        car2.setBodyType("Coupe");
-        car2.setVin("test12345");
-        car2.setClearedCustoms("YES");
 
         when(carRepository.findAll(any(Specification.class))).thenReturn(List.of(car1, car2));
 
         List<ResponseCarDTO> result = carService.searchCars(carSearchDTO);
 
         Assertions.assertEquals(2, result.size());
+
+        verify(carRepository).findAll(any(Specification.class));
+    }
+
+    @Test
+    void searchCars_shouldReturnEmptyList_whenCarNotFound() {
+
+        CarSearchDTO carSearchDTO = new CarSearchDTO();
+
+        when(carRepository.findAll(any(Specification.class))).thenReturn(List.of());
+
+        List<ResponseCarDTO> result = carService.searchCars(carSearchDTO);
+
+        Assertions.assertTrue(result.isEmpty());
 
         verify(carRepository).findAll(any(Specification.class));
     }
