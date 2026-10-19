@@ -1,17 +1,20 @@
 package com.sasha.autobuysale.service;
 
+import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.entity.Car;
 import com.sasha.autobuysale.exception.CarExists;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.Year;
 import java.util.List;
@@ -82,7 +85,9 @@ class CarServiceTest {
     }
 
     @Test
-    void getAllCars_shouldReturnListOfCars() {
+    void searchCars_shouldReturnListOfCars() {
+
+        CarSearchDTO carSearchDTO = new CarSearchDTO();
 
         Car car1 = new Car();
         car1.setBrand("BMW");
@@ -104,12 +109,12 @@ class CarServiceTest {
         car2.setVin("test12345");
         car2.setClearedCustoms("YES");
 
-        when(carRepository.findAll()).thenReturn(List.of(car1, car2));
+        when(carRepository.findAll(any(Specification.class))).thenReturn(List.of(car1, car2));
 
-        List<ResponseCarDTO> result = carService.getAllCars();
+        List<ResponseCarDTO> result = carService.searchCars(carSearchDTO);
 
         Assertions.assertEquals(2, result.size());
 
-        verify(carRepository).findAll();
+        verify(carRepository).findAll(any(Specification.class));
     }
 }
