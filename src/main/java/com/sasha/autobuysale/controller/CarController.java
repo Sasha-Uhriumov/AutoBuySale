@@ -1,5 +1,6 @@
 package com.sasha.autobuysale.controller;
 
+import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.service.CarService;
@@ -25,10 +26,10 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseCarDTO>> getCars() {
+    public ResponseEntity<List<ResponseCarDTO>> searchCars(@ModelAttribute CarSearchDTO carSearchDTO) {
 
-        List<ResponseCarDTO> allCars = carService.getAllCars();
+        List<ResponseCarDTO> cars = carService.searchCars(carSearchDTO);
 
-        return ResponseEntity.ok(allCars);
+        return ResponseEntity.ok().body(cars);
     }
 }
