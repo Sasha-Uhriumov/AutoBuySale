@@ -2,6 +2,7 @@ package com.sasha.autobuysale.mapper;
 
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
+import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
 
 public class CarMapper {
@@ -37,17 +38,29 @@ public class CarMapper {
         return responseCarDTO;
     }
 
-    public static Car updateCarDTO(Car car, CreateCarDTO createCarDTO) {
+    public static Car updateCarDTO(Car car, UpdateCarDTO updateCarDTO) {
 
-        car.setBrand(createCarDTO.getBrand());
-        car.setModel(createCarDTO.getModel());
-        car.setYear(createCarDTO.getYear());
-        car.setMileage(createCarDTO.getMileage());
-        car.setGeneration(createCarDTO.getGeneration());
-        car.setBodyType(createCarDTO.getBodyType());
-        car.setVin(createCarDTO.getVin());
-        car.setClearedCustoms(createCarDTO.getClearedCustoms());
-
+        if (updateCarDTO.getBrand() != null && !updateCarDTO.getBrand().isBlank()) {
+            car.setBrand(updateCarDTO.getBrand());
+        }
+        if (updateCarDTO.getModel() != null && !updateCarDTO.getModel().isBlank()) {
+            car.setModel(updateCarDTO.getModel());
+        }
+        if (updateCarDTO.getYear() != null) {
+            car.setYear(updateCarDTO.getYear());
+        }
+        if (updateCarDTO.getMileage() != null) {
+            car.setMileage(updateCarDTO.getMileage());
+        }
+        if (updateCarDTO.getGeneration() != null && !updateCarDTO.getGeneration().isBlank()) {
+            car.setGeneration(updateCarDTO.getGeneration());
+        }
+        if (updateCarDTO.getBodyType() != null && !updateCarDTO.getBodyType().isBlank()) {
+            car.setBodyType(updateCarDTO.getBodyType());
+        }
+        if (updateCarDTO.getClearedCustoms() != null && !updateCarDTO.getClearedCustoms().isBlank()) {
+            car.setClearedCustoms(updateCarDTO.getClearedCustoms());
+        }
         return car;
     }
 }
