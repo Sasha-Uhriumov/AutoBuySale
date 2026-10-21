@@ -16,4 +16,12 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(new ResponseExceptionDTO(e.getMessage(), HttpStatus.CONFLICT.value()));
     }
+
+    @ExceptionHandler(CarNotFound.class)
+    public ResponseEntity<ResponseExceptionDTO> carNotFound(CarNotFound e) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ResponseExceptionDTO(e.getMessage(), HttpStatus.NOT_FOUND.value()));
+    }
 }
