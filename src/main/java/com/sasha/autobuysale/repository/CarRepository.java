@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor<Car> {
 
     boolean existsByVin(String Vin);
+
+    Optional<Car> findByVin(String vin);
 }
