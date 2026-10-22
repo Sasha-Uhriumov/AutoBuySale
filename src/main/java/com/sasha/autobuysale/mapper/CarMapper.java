@@ -38,7 +38,7 @@ public class CarMapper {
         return responseCarDTO;
     }
 
-    public static Car updateCarDTO(Car car, UpdateCarDTO updateCarDTO) {
+    public static Car updateCar(Car car, UpdateCarDTO updateCarDTO) {
 
         if (updateCarDTO.getBrand() != null && !updateCarDTO.getBrand().isBlank()) {
             car.setBrand(updateCarDTO.getBrand());
