@@ -3,8 +3,10 @@ package com.sasha.autobuysale.service;
 import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
+import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
 import com.sasha.autobuysale.exception.CarExists;
+import com.sasha.autobuysale.exception.CarNotFound;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
 import com.sasha.autobuysale.specification.CarSpecification;
@@ -47,6 +49,19 @@ public class CarService {
        return carRepository.findAll(specification).stream()
                .map(CarMapper::fromEntity)
                .toList();
+    }
+
+    @Transactional
+    public ResponseCarDTO updateCar(String findByVin, UpdateCarDTO updateCarDTO) {
+        log.info("Attempt to update car with {}", findByVin);
+
+        Car existsCar = carRepository.findByVin(findByVin)
+                .orElseThrow(() -> new CarNotFound("Car not found with vin: " + findByVin));
+
+        Car updatedCar = CarMapper.updateCar(existsCar, updateCarDTO);
+        log.info("Car with vin: {} successfully updated", updatedCar.getVin());
+
+        return CarMapper.fromEntity(carRepository.save(updatedCar));
     }
 
     public Specification<Car> buildSearchSpecification(CarSearchDTO carSearchDTO) {
