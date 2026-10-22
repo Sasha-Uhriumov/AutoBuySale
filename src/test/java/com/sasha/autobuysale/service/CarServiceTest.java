@@ -6,6 +6,7 @@ import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
 import com.sasha.autobuysale.exception.CarExists;
+import com.sasha.autobuysale.exception.CarNotFound;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
 import org.checkerframework.checker.units.qual.C;
@@ -166,5 +167,20 @@ class CarServiceTest {
 
         verify(carRepository).save(any(Car.class));
         verify(carRepository).findByVin(vin);
+    }
+
+    @Test
+    void updateCar_shouldThrowCarNotFound_WhenCarNotExists() {
+        String vin = "rer3e39f9r4kr455efdef";
+        UpdateCarDTO updateCarDTO = new UpdateCarDTO();
+
+        when(carRepository.findByVin(vin)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                CarNotFound.class,
+                () -> carService.updateCar(vin, updateCarDTO)
+        );
+
+        verify(carRepository, times(1)).findByVin(vin);
     }
 }
