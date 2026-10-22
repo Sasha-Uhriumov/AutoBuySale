@@ -3,6 +3,7 @@ package com.sasha.autobuysale.service;
 import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
+import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
 import com.sasha.autobuysale.exception.CarExists;
 import com.sasha.autobuysale.mapper.CarMapper;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.Year;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -113,5 +115,56 @@ class CarServiceTest {
         Assertions.assertTrue(result.isEmpty());
 
         verify(carRepository).findAll(any(Specification.class));
+    }
+
+    @Test
+    void updateCar_shouldReturnUpdatedCar() {
+
+        String vin = "rer3e39f9r4kr455efdef";
+
+        Car existsCar = new Car();
+        existsCar.setBrand("BMW");
+        existsCar.setModel("M4");
+        existsCar.setYear(Year.of(2014));
+        existsCar.setMileage(20000);
+        existsCar.setGeneration("F82");
+        existsCar.setBodyType("Coupe");
+        existsCar.setVin(vin);
+        existsCar.setClearedCustoms("YES");
+
+        UpdateCarDTO carToUpdate = new UpdateCarDTO();
+        carToUpdate.setBrand("BMW");
+        carToUpdate.setModel("M4");
+        carToUpdate.setYear(Year.of(2014));
+        carToUpdate.setMileage(40000);
+        carToUpdate.setGeneration("F82");
+        carToUpdate.setBodyType("Coupe");
+        carToUpdate.setClearedCustoms("YES");
+
+        ResponseCarDTO carAfterUpdate = new ResponseCarDTO();
+        carAfterUpdate.setBrand("BMW");
+        carAfterUpdate.setModel("M4");
+        carAfterUpdate.setYear(Year.of(2014));
+        carAfterUpdate.setMileage(40000);
+        carAfterUpdate.setGeneration("F82");
+        carAfterUpdate.setBodyType("Coupe");
+        carAfterUpdate.setClearedCustoms("YES");
+
+        when(carRepository.findByVin(vin)).thenReturn(Optional.of(existsCar));
+        when(carRepository.save(any(Car.class))).thenReturn(existsCar);
+
+        ResponseCarDTO updatedCar = carService.updateCar(vin, carToUpdate);
+
+        Assertions.assertEquals(vin, updatedCar.getVin());
+        Assertions.assertEquals(carAfterUpdate.getBrand(), updatedCar.getBrand());
+        Assertions.assertEquals(carAfterUpdate.getModel(), updatedCar.getModel());
+        Assertions.assertEquals(carAfterUpdate.getYear(), updatedCar.getYear());
+        Assertions.assertEquals(carAfterUpdate.getMileage(), updatedCar.getMileage());
+        Assertions.assertEquals(carAfterUpdate.getGeneration(), updatedCar.getGeneration());
+        Assertions.assertEquals(carAfterUpdate.getBodyType(), updatedCar.getBodyType());
+        Assertions.assertEquals(carAfterUpdate.getClearedCustoms(), updatedCar.getClearedCustoms());
+
+        verify(carRepository).save(any(Car.class));
+        verify(carRepository).findByVin(vin);
     }
 }
