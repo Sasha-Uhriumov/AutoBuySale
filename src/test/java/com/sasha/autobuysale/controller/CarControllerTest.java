@@ -3,6 +3,7 @@ package com.sasha.autobuysale.controller;
 import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
+import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.service.CarService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CarControllerTest {
@@ -60,5 +60,25 @@ class CarControllerTest {
         Assertions.assertEquals(responseCarDTOS, response.getBody());
 
         verify(carService).searchCars(carSearchDTO);
+    }
+
+    @Test
+    void updateCar_shouldReturnUpdatedCar() {
+        String vin = "jgreigjfierfjioer";
+
+        UpdateCarDTO updateCarDTO = new UpdateCarDTO();
+        updateCarDTO.setBrand("BMW");
+
+        ResponseCarDTO responseCarDTO = new ResponseCarDTO();
+        responseCarDTO.setBrand("BMW");
+
+        when(carService.updateCar(vin, updateCarDTO)).thenReturn(responseCarDTO);
+
+        ResponseEntity<ResponseCarDTO> response = carController.updateCar(vin, updateCarDTO);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(responseCarDTO, response.getBody());
+
+        verify(carService, times(1)).updateCar(vin, updateCarDTO);
     }
 }
