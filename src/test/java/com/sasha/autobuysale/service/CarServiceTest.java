@@ -183,4 +183,18 @@ class CarServiceTest {
 
         verify(carRepository, times(1)).findByVin(vin);
     }
+
+    @Test
+    void deleteCarByVin_shouldDeleteCarWhenExists() {
+
+        Car car = new Car();
+        String vin = "rer3e39f9r4kr455efdef";
+
+        when(carRepository.findByVin(vin)).thenReturn(Optional.of(car));
+
+        carService.deleteCarByVin(vin);
+
+        verify(carRepository, times(1)).findByVin(vin);
+        verify(carRepository, times(1)).delete(car);
+    }
 }
