@@ -3,6 +3,7 @@ package com.sasha.autobuysale.controller;
 import com.sasha.autobuysale.dto.CarSearchDTO;
 import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
+import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.service.CarService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,16 @@ public class CarController {
         List<ResponseCarDTO> cars = carService.searchCars(carSearchDTO);
 
         return ResponseEntity.ok().body(cars);
+    }
+
+    @PatchMapping("/{vin}")
+    public ResponseEntity<ResponseCarDTO> updateCar(
+            @PathVariable String vin,
+            @RequestBody UpdateCarDTO updateCarDTO
+            ) {
+
+        ResponseCarDTO responseCarDTO = carService.updateCar(vin, updateCarDTO);
+
+        return ResponseEntity.ok(responseCarDTO);
     }
 }
