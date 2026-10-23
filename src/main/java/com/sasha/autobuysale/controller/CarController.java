@@ -45,4 +45,12 @@ public class CarController {
 
         return ResponseEntity.ok(responseCarDTO);
     }
+
+    @DeleteMapping("/{vin}")
+    public ResponseEntity<String> deleteCarByVin(@PathVariable  String vin) {
+
+        carService.deleteCarByVin(vin);
+
+        return ResponseEntity.ok("Car Successfully deleted with vin: " + vin);
+    }
 }
