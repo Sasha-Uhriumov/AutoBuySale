@@ -27,22 +27,23 @@ public class CarService {
 
     @Transactional
     public ResponseCarDTO createCar(CreateCarDTO createCarDTO) {
-        log.info("Attempt to create a car with VIN: {}", createCarDTO.getVin());
+        log.info("Attempt to create a car with vin: {}", createCarDTO.getVin());
 
         if (carRepository.existsByVin(createCarDTO.getVin())) {
-           throw new CarExists("Car already exists with VIN " + createCarDTO.getVin());
+           throw new CarExists("Car already exists with vin: " + createCarDTO.getVin());
         }
 
         Car car = CarMapper.toEntity(createCarDTO);
 
         Car carSaved = carRepository.save(car);
-        log.info("Car successfully created with VIN: {}", carSaved.getVin());
+        log.info("Car successfully created with vin: {}", carSaved.getVin());
 
        return CarMapper.fromEntity(carSaved);
     }
 
     @Transactional(readOnly = true)
     public List<ResponseCarDTO> searchCars(CarSearchDTO carSearchDTO) {
+        log.info("Attempt to get e car");
 
         Specification<Car> specification = buildSearchSpecification(carSearchDTO);
 
@@ -62,6 +63,17 @@ public class CarService {
         log.info("Car with vin: {} successfully updated", updatedCar.getVin());
 
         return CarMapper.fromEntity(carRepository.save(updatedCar));
+    }
+
+    @Transactional
+    public void deleteCarByVin(String vin) {
+        log.info("Attempt to delete car with win: {}", vin);
+
+        Car existsCar = carRepository.findByVin(vin)
+                .orElseThrow(() -> new CarNotFound("Car not found with vin: " + vin));
+
+        carRepository.delete(existsCar);
+        log.info("Car with vin: {} successfully deleted", vin);
     }
 
     public Specification<Car> buildSearchSpecification(CarSearchDTO carSearchDTO) {
