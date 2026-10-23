@@ -81,4 +81,18 @@ class CarControllerTest {
 
         verify(carService, times(1)).updateCar(vin, updateCarDTO);
     }
+
+    @Test
+    void deleteCar_shouldDeleteCarWhenCarExists() {
+        String vin = "jgreigjfierfjioer";
+
+        doNothing().when(carService).deleteCarByVin(vin);
+
+        ResponseEntity<String> response = carController.deleteCarByVin(vin);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals("Car Successfully deleted with vin: " + vin, response.getBody());
+
+        verify(carService, times(1)).deleteCarByVin(vin);
+    }
 }
