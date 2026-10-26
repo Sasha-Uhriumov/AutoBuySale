@@ -3,9 +3,9 @@ spring:
     name: AutoBuySale
 
   datasource:
-    url: ${db_url}
-    username: ${postgres_user}
-    password: ${postgres_password}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/${db_name}}
+    username: ${DB_USER:${postgres_user}}
+    password: ${DB_PASSWORD:${postgres_password}}
     driver-class-name: org.postgresql.Driver
 
   jpa:
