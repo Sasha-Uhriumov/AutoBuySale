@@ -23,3 +23,15 @@
 > ![env.png](images/env.png)
 
 ---
+
+### How to start app
+> 1. Run docker application  
+> ![docker.png](images/docker.png)
+> 2. In the terminal, write this command
+> ```bash
+> docker compose up --build
+> ```
+> 3. To stop the program, you need to write this command
+> ```bash
+> docker compose stop
+````
