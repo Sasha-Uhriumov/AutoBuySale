@@ -34,4 +34,32 @@
 > 3. To stop the program, you need to write this command
 > ```bash
 > docker compose stop
-````
+ 
+
+---
+
+### How to use the program
+> here is the url
+> ```bash
+> http://localhost:8080/cars
+
+> Create a car:
+> ![post-car.png](images/post-car.png)
+
+> Car search:
+> ![get-car.png](images/get-car.png)
+> You can search for a car by:  
+> brand  
+> model  
+> year  
+> mileage  
+> generation  
+> bodyType  
+> vin  
+> clearedCustoms  
+
+> Update vehicle data:
+> ![update-car.png](images/update-car.png)
+
+> Delete a car by VIN:
+> ![delete-car.png](images/delete-car.png)
