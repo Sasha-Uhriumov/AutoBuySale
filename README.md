@@ -6,6 +6,17 @@
 
 ---
 
+### Technologies
+Java 21  
+Spring Boot   
+Spring Data JPA  
+PostgreSQL  
+Flyway  
+Docker Compose  
+Maven  
+
+---
+
 ### Installation ot the project 
 > 1. You need to download the project from GitHub. 
 > ![download-zip.png](images/download-zip.png)
@@ -49,17 +60,35 @@
 > Car search:
 > ![get-car.png](images/get-car.png)
 > You can search for a car by:  
-> brand  
-> model  
-> year  
-> mileage  
-> generation  
-> bodyType  
-> vin  
-> clearedCustoms  
+> `brand`  
+> `model`  
+> `year`  
+> `mileage`  
+> `generation`  
+> `bodyType`  
+> `vin`  
+> `clearedCustoms`  
 
 > Update vehicle data:
 > ![update-car.png](images/update-car.png)
 
 > Delete a car by VIN:
 > ![delete-car.png](images/delete-car.png)
+
+---
+
+### JSON to make it easy to copy and use
+
+ Create a car:
+```json
+ {
+  "brand": "BMW",
+  "model": "M4",
+  "year": "2014",
+  "mileage": "20000",
+  "generation": "F82",
+  "bodyType": "coupe",
+  "vin": "eiru39uer93djfjnei",
+  "clearedCustoms": "YES"
+}
+> ```
