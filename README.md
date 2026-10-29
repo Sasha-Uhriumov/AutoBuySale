@@ -6,7 +6,7 @@
 
 ---
 
-### installation ot the project 
+### Installation ot the project 
 > 1. You need to download the project from GitHub. 
 > ![download-zip.png](images/download-zip.png)
 > 2. After downloading the ZIP file, you need to unzip it a folder will appear next to it.
@@ -15,3 +15,9 @@
 
 ---
 
+### Preparing to launch the program
+
+> 1. You need Docker
+> 2. You should rename the .env.example file to .env
+> 3. you need to fill in the fields
+> ![env.png](images/env.png)
