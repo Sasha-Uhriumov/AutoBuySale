@@ -19,5 +19,7 @@
 
 > 1. You need Docker
 > 2. You should rename the .env.example file to .env
-> 3. you need to fill in the fields
+> 3. You need to fill in the fields with your own information, as everything is written here as an example.
 > ![env.png](images/env.png)
+
+---
