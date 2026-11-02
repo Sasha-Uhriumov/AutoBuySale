@@ -39,10 +39,9 @@ public class Car {
     @Column(name = "body_type", length = 50, nullable = false)
     private String bodyType;
 
-    //legal information
     @Column(name = "vin", length = 20, nullable = false)
     private String vin;
 
-    @Column(name = "cleared_customs", length = 5, nullable = false)
-    private String clearedCustoms;
+    @Column(name = "cleared_customs", nullable = false)
+    private Boolean clearedCustoms;
 }
