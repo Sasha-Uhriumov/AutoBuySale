@@ -1,5 +1,6 @@
 package com.sasha.autobuysale.dto;
 
+import com.sasha.autobuysale.enums.ClearedCustoms;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +18,5 @@ public class ResponseCarDTO {
     private String generation;
     private String bodyType;
     private String vin;
-    private String clearedCustoms;
+    private ClearedCustoms clearedCustoms;
 }
