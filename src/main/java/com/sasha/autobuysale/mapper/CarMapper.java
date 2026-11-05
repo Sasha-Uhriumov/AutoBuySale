@@ -4,6 +4,7 @@ import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
+import com.sasha.autobuysale.enums.ClearedCustoms;
 
 public class CarMapper {
 
@@ -17,7 +18,12 @@ public class CarMapper {
         car.setGeneration(createCarDTO.getGeneration());
         car.setBodyType(createCarDTO.getBodyType());
         car.setVin(createCarDTO.getVin());
-        car.setClearedCustoms(createCarDTO.getClearedCustoms());
+
+        if (createCarDTO.getClearedCustoms().equalsIgnoreCase("YES")) {
+            car.setClearedCustoms(true);
+        } else {
+            car.setClearedCustoms(false);
+        }
 
         return car;
     }
@@ -33,7 +39,12 @@ public class CarMapper {
         responseCarDTO.setGeneration(car.getGeneration());
         responseCarDTO.setBodyType(car.getBodyType());
         responseCarDTO.setVin(car.getVin());
-        responseCarDTO.setClearedCustoms(car.getClearedCustoms());
+
+        if (car.getClearedCustoms().equals(true)) {
+            responseCarDTO.setClearedCustoms(ClearedCustoms.YES);
+        } else {
+            responseCarDTO.setClearedCustoms(ClearedCustoms.NO);
+        }
 
         return responseCarDTO;
     }
@@ -59,7 +70,11 @@ public class CarMapper {
             car.setBodyType(updateCarDTO.getBodyType());
         }
         if (updateCarDTO.getClearedCustoms() != null && !updateCarDTO.getClearedCustoms().isBlank()) {
-            car.setClearedCustoms(updateCarDTO.getClearedCustoms());
+            if (updateCarDTO.getClearedCustoms().equals("YES")) {
+                car.setClearedCustoms(true);
+            } else{
+                car.setClearedCustoms(false);
+            }
         }
         return car;
     }
