@@ -5,11 +5,11 @@ import com.sasha.autobuysale.dto.CreateCarDTO;
 import com.sasha.autobuysale.dto.ResponseCarDTO;
 import com.sasha.autobuysale.dto.UpdateCarDTO;
 import com.sasha.autobuysale.entity.Car;
+import com.sasha.autobuysale.enums.ClearedCustoms;
 import com.sasha.autobuysale.exception.CarExists;
 import com.sasha.autobuysale.exception.CarNotFound;
 import com.sasha.autobuysale.mapper.CarMapper;
 import com.sasha.autobuysale.repository.CarRepository;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,7 +68,7 @@ class CarServiceTest {
         Assertions.assertEquals("F82", responseCarDTO.getGeneration());
         Assertions.assertEquals("Coupe", responseCarDTO.getBodyType());
         Assertions.assertEquals("rer3e39f9r4kr455efdef", responseCarDTO.getVin());
-        Assertions.assertEquals("YES", responseCarDTO.getClearedCustoms());
+        Assertions.assertEquals(ClearedCustoms.YES, responseCarDTO.getClearedCustoms());
     }
     @Test
     void createCar_shouldThrowCarExists_whenVinAlreadyExists() {
@@ -93,7 +93,9 @@ class CarServiceTest {
         CarSearchDTO carSearchDTO = new CarSearchDTO();
 
         Car car1 = new Car();
+        car1.setClearedCustoms(true);
         Car car2 = new Car();
+        car2.setClearedCustoms(true);
 
         when(carRepository.findAll(any(Specification.class))).thenReturn(List.of(car1, car2));
 
@@ -131,7 +133,7 @@ class CarServiceTest {
         existsCar.setGeneration("F82");
         existsCar.setBodyType("Coupe");
         existsCar.setVin(vin);
-        existsCar.setClearedCustoms("YES");
+        existsCar.setClearedCustoms(true);
 
         UpdateCarDTO carToUpdate = new UpdateCarDTO();
         carToUpdate.setBrand("BMW");
@@ -149,7 +151,7 @@ class CarServiceTest {
         carAfterUpdate.setMileage(40000);
         carAfterUpdate.setGeneration("F82");
         carAfterUpdate.setBodyType("Coupe");
-        carAfterUpdate.setClearedCustoms("YES");
+        carAfterUpdate.setClearedCustoms(ClearedCustoms.YES);
 
         when(carRepository.findByVin(vin)).thenReturn(Optional.of(existsCar));
         when(carRepository.save(any(Car.class))).thenReturn(existsCar);
