@@ -142,7 +142,7 @@ class CarServiceTest {
         carToUpdate.setMileage(40000);
         carToUpdate.setGeneration("F82");
         carToUpdate.setBodyType("Coupe");
-        carToUpdate.setClearedCustoms("YES");
+        carToUpdate.setClearedCustoms(ClearedCustoms.YES);
 
         ResponseCarDTO carAfterUpdate = new ResponseCarDTO();
         carAfterUpdate.setBrand("BMW");
