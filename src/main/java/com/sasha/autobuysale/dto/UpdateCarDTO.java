@@ -1,5 +1,6 @@
 package com.sasha.autobuysale.dto;
 
+import com.sasha.autobuysale.enums.ClearedCustoms;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,5 @@ public class UpdateCarDTO {
     private Integer mileage;
     private String generation;
     private String bodyType;
-    private String clearedCustoms;
+    private ClearedCustoms clearedCustoms;
 }
