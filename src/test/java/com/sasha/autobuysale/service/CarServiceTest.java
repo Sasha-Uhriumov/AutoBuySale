@@ -48,7 +48,7 @@ class CarServiceTest {
         createCarDTO.setGeneration("F82");
         createCarDTO.setBodyType("Coupe");
         createCarDTO.setVin("rer3e39f9r4kr455efdef");
-        createCarDTO.setClearedCustoms("YES");
+        createCarDTO.setClearedCustoms(ClearedCustoms.YES);
 
         Car car = CarMapper.toEntity(createCarDTO);
         car.setId(id);
