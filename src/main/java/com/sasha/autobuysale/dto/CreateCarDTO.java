@@ -1,5 +1,6 @@
 package com.sasha.autobuysale.dto;
 
+import com.sasha.autobuysale.enums.ClearedCustoms;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,7 +21,7 @@ public class CreateCarDTO {
     @Size(min = 1, max = 100, message = "Model should be 1-100 characters")
     private String model;
 
-    @NotNull(message = "Year must be not Null")
+    @NotNull(message = "Year must be not null")
     private Year year;
 
     @NotNull(message = "Mileage must be not null")
@@ -38,8 +39,7 @@ public class CreateCarDTO {
     @Size(min = 17, max = 20, message = "VIN should be 1-20 characters")
     private String vin;
 
-    @NotBlank(message = "Cleared customs must be not blank")
-    @Size(min = 3, max = 5, message = "Cleared customs should be 3-5 characters")
-    private String clearedCustoms;
+    @NotNull(message = "Cleared customs must be not null")
+    private ClearedCustoms clearedCustoms;
 
 }
