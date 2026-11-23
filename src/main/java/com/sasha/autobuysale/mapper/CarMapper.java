@@ -69,12 +69,8 @@ public class CarMapper {
         if (updateCarDTO.getBodyType() != null && !updateCarDTO.getBodyType().isBlank()) {
             car.setBodyType(updateCarDTO.getBodyType());
         }
-        if (updateCarDTO.getClearedCustoms() != null && !updateCarDTO.getClearedCustoms().isBlank()) {
-            if (updateCarDTO.getClearedCustoms().equals("YES")) {
-                car.setClearedCustoms(true);
-            } else{
-                car.setClearedCustoms(false);
-            }
+        if (updateCarDTO.getClearedCustoms() != null) {
+            car.setClearedCustoms(ClearedCustoms.YES.equals(updateCarDTO.getClearedCustoms()));
         }
         return car;
     }
