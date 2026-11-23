@@ -19,7 +19,7 @@ public class CarMapper {
         car.setBodyType(createCarDTO.getBodyType());
         car.setVin(createCarDTO.getVin());
 
-        if (createCarDTO.getClearedCustoms().equals(ClearedCustoms.YES)) {
+        if (ClearedCustoms.YES.equals(createCarDTO.getClearedCustoms())) {
             car.setClearedCustoms(true);
         } else {
             car.setClearedCustoms(false);
